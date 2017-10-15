@@ -10,10 +10,10 @@ export const getCategories = () =>
         .then((res) => res.json() )
         .then((data) => data.categories);
 
-export const getCategoryPosts = (categorie) =>
-    fetch(`${backEndLink}/${categorie.path}/posts`
+export const getCategoryPosts = (categorieName) =>{
+    return fetch(`${backEndLink}/${categorieName}/posts`
         , {headers: headers})
-        .then((res) => res.json() )
+        .then((res) => res.json() )}
 
 export const getPosts = () =>
     fetch(`${backEndLink}/posts`
@@ -54,6 +54,11 @@ export const deletePost = (post) =>
     method: 'DELETE',
     headers: headers,
   }).then(res => res.json())
+
+export const getComments = (post) =>{
+  return fetch(`${backEndLink}/posts/${post.id}/comments`, { headers })
+    .then(res => res.json())
+}
 
 export const createComment = (body) =>
   fetch(`${backEndLink}/comments`, {
