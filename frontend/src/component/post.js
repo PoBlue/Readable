@@ -14,12 +14,12 @@ class Post extends Component {
     }
 
     render() {
-        let { posts } = this.props;
-        if(!posts) return null;
+        let { posts, category } = this.props;
+        if(!posts[category]) return null;
 
         return (
             <div id="post">
-                {posts.map((post) => <Comment key={post.id} post={post}/>)}
+                {posts[category].map((post) => <Comment key={post.id} post={post}/>)}
             </div>
         );
     }

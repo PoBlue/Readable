@@ -18,7 +18,6 @@ class Comment extends Component {
 }
 
 function mapStateToProps({ comments }) {
-    // console.log(comments)
     return {
         comments
     };

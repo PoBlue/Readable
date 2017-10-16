@@ -4,10 +4,11 @@ import {
     GET_ALL_POST
 } from './actionType'
 
-function getAll(posts) {
+function getAll(posts, category) {
     return {
         type: GET_POST_FROM_CATEGORY,
-        posts
+        posts,
+        category
     }
 }
 
@@ -21,7 +22,7 @@ function getAllPosts(posts) {
 export function getPostsInCategory(category) {
     return dispatch => {
         return getCategoryPosts(category).then(data =>
-            dispatch(getAll(data)))
+            dispatch(getAll(data, category)))
     }
 }
 

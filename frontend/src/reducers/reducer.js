@@ -18,22 +18,42 @@ function categories(state = [], action) {
     }
 }
 
+/*
+    {
+        categoryKey: [posts]
+    }
+*/
 function posts(state = [], action) {
     switch (action.type) {
         case GET_POST_FROM_CATEGORY:
-            return action.posts
+            const { posts, category } = action;
+            const newState = {
+                ...state,
+                [category]: posts
+            }
+            return newState
         case GET_ALL_POST:
-            console.log(action.posts)
             return action.posts
         default:
             return state
     }
 }
 
+/*
+    {
+        postKey: [comments]
+    }
+*/
 function comments(state = [], action) {
     switch (action.type) {
         case GET_ALL_COMMENT:
-            return state.concat(action.comments)
+            const { comments, post } = action
+            const newState = {
+                ...state,
+                [post.id]: comments
+            }
+            
+            return newState
         default:
             return state
     }

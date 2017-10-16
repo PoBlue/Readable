@@ -3,16 +3,17 @@ import {
     GET_ALL_COMMENT
 } from './actionType'
 
-function getAll(comments) {
+function getAll(comments, post) {
     return {
         type: GET_ALL_COMMENT,
-        comments
+        comments,
+        post
     }
 }
 
 export function getAllComments(post) {
     return dispatch => {
         return getComments(post).then(data =>
-            dispatch(getAll(data)))
+            dispatch(getAll(data, post)))
     }
 }
