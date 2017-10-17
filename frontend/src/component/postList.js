@@ -9,40 +9,25 @@ import {
     createPostAction
 } from '../actions/post'
 import { getAllComments } from '../actions/comment'
+import Post from './post'
 
-class Post extends Component {
-    componentDidMount() {
-        //get post
-    }
-
-    clickHanlder() {
-        const { getPostsInCategory,
-            createPost,
-            category,
-            deletePost,
-            getAllPosts } = this.props;
-
-        let postC = {
-            id: '9ni223sga22f2p33lnez',
-            timestamp: 1468479767890,
-            title: 'react in 1 minutes!',
-            body: 'it takes more than 10 minutes to learn technology.',
-            author: 'thingone',
-            category: 'react',
-            voteScore: -5,
-            deleted: false
-        }
-        this.props.createPost(postC)
+class PostList extends Component {
+    componentWillMount() {
+        let { posts, category } = this.props;
+        this.props.getPostsInCategory(category)
     }
 
     render() {
         let { posts, category, createPost } = this.props;
-        if(!posts[category]) return ('');
+        const allPosts = posts[category];
+        if(!allPosts) return ('');
 
         return (
-            <div id="post">
-                {posts[category].map((post) => <CommentList key={post.id} post={post}/>)}
-                <button onClick={this.clickHanlder.bind(this)} />
+            <div id="post-list">
+                <h1>Post</h1>
+                {posts[category].map((post) =>
+                    <Post key={post.id} post={post}/>
+                )}
             </div>
         );
     }
@@ -56,6 +41,7 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        getAllPosts: () => dispatch(getAllCategoryPosts()),
         getPostsInCategory: (category) => dispatch(getPostsInCategory(category)),
         getAllCommentsInPost: (post) => dispatch(getAllComments(post)),
         createPost: (post) => dispatch(createPostAction(post)),
@@ -64,4 +50,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)

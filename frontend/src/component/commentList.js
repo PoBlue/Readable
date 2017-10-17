@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { 
+import {
     getAllComments,
     updateCommentAction,
     deleteCommentAction,
@@ -30,6 +30,7 @@ class CommentList extends Component {
 
     render() {
         const { comments } = this.props;
+        console.log(comments)
         return (
             <div id="comment">
                 <button onClick={this.clickHanlder.bind(this)}>create comment</button>

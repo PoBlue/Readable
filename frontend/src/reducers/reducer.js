@@ -17,9 +17,9 @@ function categories(state = [], action) {
     switch (action.type) {
         case GET_ALL_CATEGORY:
             return action.categories.reduce((categories, category) => {
-                categories[category.name] = category.path
+                categories.push(category.path)
                 return categories
-            }, {})
+            }, [])
         default:
             return state
     }
@@ -34,11 +34,14 @@ function posts(state = {}, action) {
     switch (action.type) {
         case GET_POST_FROM_CATEGORY:
         {
-            const { posts, category } = action;
-            const newState = {
-                ...state,
-                [category]: posts
-            }
+            const newState = action.posts.reduce((posts, post) => {
+                if(!(post.category in posts)) {
+                    posts[post.category] = [post];
+                } else {
+                    posts[post.category].push(post);
+                }
+                return posts
+            }, {...state});
             return newState
         }
         case GET_ALL_POST:
@@ -90,8 +93,6 @@ function posts(state = {}, action) {
     {
         postKey: [comments]
     }
-
-
 */
 function comments(state = {}, action) {
     switch (action.type) {
@@ -106,17 +107,15 @@ function comments(state = {}, action) {
                     }
                 }
                 return comments
-            }, state);
+            }, {...state});
         case CREATE_COMMENT:
         {
             const { comment } = action;
-            console.log(comment)
             if(!state[comment.parentId]) {
                 state[comment.parentId] = [comment]
             } else {
                 state[comment.parentId].push(comment);
             }
-            console.log(state)
             return state;
         }
         case UPDATE_COMMENT:{
