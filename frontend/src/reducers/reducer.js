@@ -6,8 +6,12 @@ import {
     GET_ALL_COMMENT,
     CREATE_POST,
     UPDATE_POST,
-    DELETE_POST
+    DELETE_POST,
+    CREATE_COMMENT,
+    UPDATE_COMMENT,
+    DELETE_COMMENT
  } from '../actions/actionType'
+ import { contains } from '../util/Util'
 
 function categories(state = [], action) {
     switch (action.type) {
@@ -86,17 +90,59 @@ function posts(state = {}, action) {
     {
         postKey: [comments]
     }
+
+
 */
 function comments(state = {}, action) {
     switch (action.type) {
         case GET_ALL_COMMENT:
-            const { comments, post } = action
+            return action.comments.reduce((comments, comment) => {
+                if(!(comment.parentId in comments)) {
+                    comments[comment.parentId] = [comment];
+                } else {
+                    let postComments = comments[comment.parentId]
+                    if (!contains(postComments, comment)){
+                        postComments.push(comment);
+                    }
+                }
+                return comments
+            }, state);
+        case CREATE_COMMENT:
+        {
+            const { comment } = action;
+            console.log(comment)
+            if(!state[comment.parentId]) {
+                state[comment.parentId] = [comment]
+            } else {
+                state[comment.parentId].push(comment);
+            }
+            console.log(state)
+            return state;
+        }
+        case UPDATE_COMMENT:{
+            const { comment } = action;
+            const newComments = state[comment.parentId].map((oldComment) => {
+                if (oldComment.id === comment.id) {
+                    return comment;
+                }
+                return oldComment;
+            });
             const newState = {
                 ...state,
-                [post.id]: comments
+                [comment.parentId]: newComments
             }
-
-            return newState
+            return newState;
+        }
+        case DELETE_COMMENT:{
+            const { comment } = action;
+            const newComments = state[comment.parentId].filter((oldComment) => {
+                return comment.id !== oldComment.id
+            })
+            return {
+                ...state,
+                [comment.parentId]: newComments
+            }
+        }
         default:
             return state
     }

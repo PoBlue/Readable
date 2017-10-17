@@ -4,3 +4,12 @@ export const uuidv4 = () => {
     return v.toString(16);
   });
 }
+
+export function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i].id === obj.id) {
+            return true;
+        }
+    }
+    return false;
+}

@@ -8,6 +8,7 @@ import {
     updatePostAction,
     createPostAction
 } from '../actions/post'
+import { getAllComments } from '../actions/comment'
 
 class Post extends Component {
     componentDidMount() {
@@ -37,7 +38,6 @@ class Post extends Component {
     render() {
         let { posts, category, createPost } = this.props;
         if(!posts[category]) return ('');
-        console.log(posts)
 
         return (
             <div id="post">
@@ -57,6 +57,7 @@ function mapStateToProps({posts}) {
 function mapDispatchToProps(dispatch) {
     return {
         getPostsInCategory: (category) => dispatch(getPostsInCategory(category)),
+        getAllCommentsInPost: (post) => dispatch(getAllComments(post)),
         createPost: (post) => dispatch(createPostAction(post)),
         deletePost: (post) => dispatch(deletePostAction(post)),
         updatePost: (post) => dispatch(updatePostAction(post))
