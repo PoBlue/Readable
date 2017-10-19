@@ -13,3 +13,11 @@ export function contains(a, obj) {
     }
     return false;
 }
+
+//https://stackoverflow.com/questions/40927938/extract-time-from-timestamp-in-js
+export function getTimeFromDate(timestamp) {
+  var date = new Date(timestamp * 1000);
+  date.setFullYear(2017)
+
+  return date.toLocaleString();
+}

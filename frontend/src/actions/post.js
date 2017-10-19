@@ -3,14 +3,18 @@ import {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    getPostDetail,
+    votePost
 } from '../api/Api'
 import {
     GET_POST_FROM_CATEGORY,
     GET_ALL_POST,
     CREATE_POST,
     UPDATE_POST,
-    DELETE_POST
+    DELETE_POST,
+    GET_POST_DETAIL,
+    VOTE_POST
 } from './actionType'
 
 function getAll(posts, category) {
@@ -49,6 +53,20 @@ function deleteP(post) {
     }
 }
 
+function detail(post) {
+    return {
+        type: GET_POST_DETAIL,
+        post
+    }
+}
+
+function vote(post) {
+    return {
+        type: VOTE_POST,
+        post
+    }
+}
+
 export function getPostsInCategory(category) {
     return dispatch => {
         return getCategoryPosts(category).then(data =>
@@ -80,6 +98,22 @@ export function deletePostAction(post) {
     return dispatch => {
         return deletePost(post).then(data => {
             dispatch(deleteP(post))
+        })
+    }
+}
+
+export function getPostDetailAction(postId) {
+    return dispatch => {
+        return getPostDetail(postId).then(data =>{
+            dispatch(detail(data))
+        })
+    }
+}
+
+export function votePostAction(post, isUp) {
+    return dispatch => {
+        return votePost(post, isUp).then(data => {
+            dispatch(vote(data))
         })
     }
 }

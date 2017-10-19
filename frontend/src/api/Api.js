@@ -27,15 +27,15 @@ export const createPost = (body) =>
     body: JSON.stringify(body)
   }).then(res => res.json())
 
-export const getPostDetail = (post) =>
-  fetch(`${backEndLink}/posts/${post.id}`, { headers })
+export const getPostDetail = (postId) =>
+  fetch(`${backEndLink}/posts/${postId}`, { headers })
     .then(res => res.json())
 
 export const votePost = (post, isUp) => {
   const vote = isUp? "upVote" : "downVote";
   const body = {"option": vote};
 
-  fetch(`${backEndLink}/posts/${post.id}`, {
+  return fetch(`${backEndLink}/posts/${post.id}`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(body)
@@ -71,7 +71,7 @@ export const voteComment = (comment, isUp) => {
   const vote = isUp? "upVote" : "downVote";
   const body = {"option": vote};
 
-  fetch(`${backEndLink}/comments/${comment.id}`, {
+  return fetch(`${backEndLink}/comments/${comment.id}`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(body)

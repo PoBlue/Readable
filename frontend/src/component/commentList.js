@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import Comment from './comment'
+import {mapCommentDispatchToProps} from '../dispatches/dispatches'
 import {
-    getAllComments,
-    updateCommentAction,
-    deleteCommentAction,
-    createCommentAction
-} from '../actions/comment'
+    OPTION_TIME,
+    OPTION_VOTE
+} from './constant'
+import SortSelector from './sortSelector'
 
 class CommentList extends Component {
     componentDidMount() {
@@ -28,11 +29,24 @@ class CommentList extends Component {
         this.props.createComment(commentNew)
     }
 
+    state = {
+        sortby: OPTION_VOTE
+    }
+
+    updateSortby(sortby) {
+        this.setState(sortby);
+    }
+
     render() {
-        const { comments } = this.props;
-        console.log(comments)
+        const { comments, post } = this.props;
+        if(!comments[post.id]) return "loding";
+
         return (
-            <div id="comment">
+            <div id="comment-list">
+                <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)}/>
+                {comments[post.id].map((comment) => (
+                    <Comment key={comment.id} comment={comment}/>
+                ))}
                 <button onClick={this.clickHanlder.bind(this)}>create comment</button>
             </div>
         );
@@ -45,13 +59,4 @@ function mapStateToProps({ comments }) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getAllCommentsInPost: (post) => dispatch(getAllComments(post)),
-        createComment: (comment) => dispatch(createCommentAction(comment)),
-        deleteComment: (comment) => dispatch(deleteCommentAction(comment)),
-        updateComment: (comment) => dispatch(updateCommentAction(comment))
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentList);
+export default connect(mapStateToProps, mapCommentDispatchToProps)(CommentList);

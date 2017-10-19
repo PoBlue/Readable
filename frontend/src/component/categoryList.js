@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { getAllCategory } from '../actions/category'
 import { getPostsInCategory, getAllCategoryPosts } from '../actions/post'
+import { mapCategoryDispatchToProps } from '../dispatches/dispatches'
 import { Link } from 'react-router-dom';
 import PostList from './postList'
 
 class CategoryList extends Component {
     componentDidMount() {
         this.props.getAllCategory();
-        this.props.getAllPosts();
     }
 
     render() {
@@ -43,12 +43,4 @@ function mapStateToProps({ categories, posts }) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getAllCategory: () => dispatch(getAllCategory()),
-        getPostsInCategory: (category) => dispatch(getPostsInCategory(category)),
-        getAllPosts: () => dispatch(getAllCategoryPosts()),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+export default connect(mapStateToProps, mapCategoryDispatchToProps)(CategoryList);

@@ -2,13 +2,15 @@ import {
     getComments,
     createComment,
     deleteComment,
-    updateComment
+    updateComment,
+    voteComment
 } from '../api/Api'
 import {
     GET_ALL_COMMENT,
     DELETE_COMMENT,
     UPDATE_COMMENT,
-    CREATE_COMMENT
+    CREATE_COMMENT,
+    VOTE_COMMENT
 } from './actionType'
 
 function getAll(comments, post) {
@@ -40,6 +42,13 @@ function create(comment) {
     }
 }
 
+function vote(comment) {
+    return {
+        type: VOTE_COMMENT,
+        comment
+    }
+}
+
 export function getAllComments(post) {
     return dispatch => {
         return getComments(post).then(data =>
@@ -62,5 +71,11 @@ export function deleteCommentAction(comment) {
 export function updateCommentAction(comment) {
     return dispatch => {
         return updateComment(comment).then(_ => dispatch(update(comment)))
+    }
+}
+
+export function voteCommentAction(comment, isUp) {
+    return dispatch => {
+        return voteComment(comment, isUp).then(data => dispatch(vote(data)))
     }
 }

@@ -9,7 +9,10 @@ import {
     DELETE_POST,
     CREATE_COMMENT,
     UPDATE_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    VOTE_COMMENT,
+    GET_POST_DETAIL,
+    VOTE_POST
  } from '../actions/actionType'
  import { contains } from '../util/Util'
 
@@ -28,6 +31,7 @@ function categories(state = [], action) {
 /*
     {
         categoryKey: [posts]
+        detailPost: post
     }
 */
 function posts(state = {}, action) {
@@ -41,7 +45,7 @@ function posts(state = {}, action) {
                     posts[post.category].push(post);
                 }
                 return posts
-            }, {...state});
+            }, {});
             return newState
         }
         case GET_ALL_POST:
@@ -84,6 +88,17 @@ function posts(state = {}, action) {
                 [post.category]: newPosts
             }
         }
+        case GET_POST_DETAIL:
+        {   
+            return {
+                detailPost: { ...action.post }
+            }
+        }
+        case VOTE_POST: {
+            return {
+                detailPost: { ...action.post }
+            }
+        }
         default:
             return state
     }
@@ -118,7 +133,7 @@ function comments(state = {}, action) {
             }
             return state;
         }
-        case UPDATE_COMMENT:{
+        case UPDATE_COMMENT, VOTE_COMMENT:{
             const { comment } = action;
             const newComments = state[comment.parentId].map((oldComment) => {
                 if (oldComment.id === comment.id) {

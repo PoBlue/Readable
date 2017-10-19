@@ -5,6 +5,7 @@ import * as API from './api/Api'
 import * as Util from './util/Util'
 import CategoryList from './component/categoryList'
 import Category from './component/category'
+import PostDetail from './component/postDetail'
 import { Route } from 'react-router-dom';
 
 class App extends Component {
@@ -15,8 +16,11 @@ class App extends Component {
         <Route exact path="/" render={() =>
           <CategoryList/>
         }/>
-        <Route path="/:category" render={() =>
+        <Route exact path="/:category" render={() =>
           <Category/>
+        }/>
+        <Route exact path="/post/:postId/detail" render={() => 
+          <PostDetail/>
         }/>
       </div>
     );

@@ -5,8 +5,10 @@ import {
     OPTION_VOTE
  } from './constant'
 import { getPostsInCategory } from '../actions/post'
+import { mapPostDispatchToProps } from '../dispatches/dispatches'
 import { connect } from 'react-redux'
 import PostList from './postList'
+import SortSelector from './sortSelector'
 
 class Category extends Component {
     componentDidMount() {
@@ -17,9 +19,8 @@ class Category extends Component {
         sortby: OPTION_VOTE
     }
 
-    selectHandler(event) {
-        let selectValue = event.target.value;
-        this.setState({ sortby: selectValue });
+    updateSortby(sortby) {
+        this.setState(sortby);
     }
 
     render() {
@@ -28,23 +29,12 @@ class Category extends Component {
             <div id="category">
                 <h1>{categoryName}</h1>
                 <button onClick={_ => this.props.history.goBack()}>Go Back</button>
-                <select name="sort" id="sort"
-                    value={this.state.sortby}
-                    onChange={(event) => this.selectHandler(event)}>
-                    <option value="sortby" disabled>sort by</option>
-                    <option value={OPTION_TIME}>time</option>
-                    <option value={OPTION_VOTE}>vote</option>
-                </select>
+                <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)}/>
                 <PostList category={categoryName} sortby={this.state.sortby}/>
             </div>
         )
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getPostsInCategory: (category) => dispatch(getPostsInCategory(category)),
-    }
-}
 
-export default withRouter(connect(undefined,mapDispatchToProps)(Category))
+export default withRouter(connect(undefined, mapPostDispatchToProps)(Category))
