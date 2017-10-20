@@ -7,26 +7,14 @@ import {
     OPTION_VOTE
 } from './constant'
 import SortSelector from './sortSelector'
+import CommentForm from './commentForm'
+import {sortObjectArrayByKey}  from '../util/Util'
 
 class CommentList extends Component {
     componentDidMount() {
         //get comment
         const { getAllComments, post } = this.props;
         this.props.getAllCommentsInPost(post);
-    }
-
-    clickHanlder() {
-        const commentNew = {
-                id: '8tu4bsun805n8un48ve89',
-                parentId: "8xf0y6ziyjabvozdd253nd",
-                timestamp: 1469479767190,
-                body: 'Comments. Are. Cool.',
-                author: 'thingone',
-                voteScore: -5,
-                deleted: false,
-                parentDeleted: false
-        }
-        this.props.createComment(commentNew)
     }
 
     state = {
@@ -39,15 +27,17 @@ class CommentList extends Component {
 
     render() {
         const { comments, post } = this.props;
-        if(!comments[post.id]) return "loding";
+        let allComments = comments[post.id]
+        if(!allComments) allComments=[];
+        sortObjectArrayByKey(allComments, this.state.sortby)
 
         return (
             <div id="comment-list">
                 <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)}/>
-                {comments[post.id].map((comment) => (
+                {allComments.map((comment) => (
                     <Comment key={comment.id} comment={comment}/>
                 ))}
-                <button onClick={this.clickHanlder.bind(this)}>create comment</button>
+                <CommentForm postId={post.id}/>
             </div>
         );
     }

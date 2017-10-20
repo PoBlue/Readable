@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import ModalPopUpButton from './modalPopUp'
 import serializeForm from 'form-serialize'
-import {commentCreator} from '../api/Creator'
-import {mapCommentDispatchToProps} from '../dispatches/dispatches'
+import {postCreator} from '../api/Creator'
+import {mapPostDispatchToProps} from '../dispatches/dispatches'
 import { connect } from 'react-redux'
 
-class CommentForm extends Component {
+class PostForm extends Component {
     state = {
         modalIsOpen: false,
         canSubmit: true,
-        errorMessage: ""
+        errorMessage: "",
     }
 
     openModel(isOpen) {
@@ -19,37 +19,41 @@ class CommentForm extends Component {
     submitHandler(e) {
         e.preventDefault();
         const value = serializeForm(e.target, {hash: true})
-        if( !(value.author && value.body) ) {
+        if( !(value.author && value.body && value.title) ) {
             this.setState({ errorMessage: "Please input all filed"})
             return;
         }
         if(this.props.editorMode) {
-            const upadteComment = {
-                ...this.props.comment,
+            const upadtePost = {
+                ...this.props.post,
                 "author": value.author,
                 "body": value.body,
+                "title": value.title
             }
-            this.props.updateComment(upadteComment)
+            this.props.updatePost(upadtePost)
         } else {
-            const comment = commentCreator(value.body, value.author, this.props.postId);
-            this.props.createComment(comment)
+            const post = postCreator(value.body, value.author, value.title, this.props.category);
+            this.props.createPost(post)
         }
         this.openModel(false)
     }
 
     render() {
-        let comment = this.props.comment
-        if (!comment) comment = {};
+        let post = this.props.post
+        if (!post) post = {};
         const buttonName = this.props.editorMode? 'edit' : 'create'
-        const {body, author} = comment
+        const {body, author, title} = post
         return (
-            <div id="comment-form">
+            <div id="post-form">
                 <ModalPopUpButton triggerName={buttonName}
                     isOpen={this.state.modalIsOpen}
                     openModel={this.openModel.bind(this)}
                 >
-                    <h1>Create Comment</h1>
+                    <h1>Create Post</h1>
                     <form onSubmit={(e) => this.submitHandler(e)}>
+                        <label htmlFor="title">Title</label>
+                        <input type="text" name="title" defaultValue={title}/>
+                        <br/>
                         <textarea name="body" id="post-content"
                             cols="30" rows="10"
                             placeholder="Comment Content"
@@ -68,4 +72,4 @@ class CommentForm extends Component {
     }
 }
 
-export default connect(undefined, mapCommentDispatchToProps)(CommentForm);
+export default connect(undefined, mapPostDispatchToProps)(PostForm);

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import CommentList from './commentList'
 import { getTimeFromDate } from '../util/Util'
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
+import {mapPostDispatchToProps} from '../dispatches/dispatches'
+import PostForm from './postForm'
 
 class Post extends Component {
     render() {
@@ -21,10 +24,13 @@ class Post extends Component {
                         <b>timestamp: </b>{timestamp}<br />
                     </li>
                 </ul>
+                <button onClick={() => this.props.deletePost(post)}>delete</button>
+                <br/>
+                <PostForm category={post.category} post={post} editorMode={true}></PostForm>
                 <Link to={`/post/${id}/detail`}>detail</Link>
             </div>
         )
     }
 }
 
-export default Post;
+export default connect(undefined, mapPostDispatchToProps)(Post);

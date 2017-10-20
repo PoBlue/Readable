@@ -42,11 +42,11 @@ export const votePost = (post, isUp) => {
   }).then(res => res.json())
 }
 
-export const updatePost = (post, body) =>
+export const updatePost = (post) =>
   fetch(`${backEndLink}/posts/${post.id}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify(body)
+    body: JSON.stringify(post)
   }).then(res => res.json())
 
 export const deletePost = (post) =>
@@ -60,11 +60,11 @@ export const getComments = (post) =>{
     .then(res => res.json())
 }
 
-export const createComment = (body) =>
+export const createComment = (comment) =>
   fetch(`${backEndLink}/comments`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(body)
+    body: JSON.stringify(comment)
   }).then(res => res.json())
 
 export const voteComment = (comment, isUp) => {
@@ -83,11 +83,11 @@ export const getCommentDetail = (comment) =>
     .then(res => res.json())
 
 //MARK: 用 new comment 代替 body
-export const updateComment = (comment, body) =>
+export const updateComment = (comment) =>
   fetch(`${backEndLink}/comments/${comment.id}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify(body)
+    body: JSON.stringify(comment)
   }).then(res => res.json())
 
 export const deleteComment = (comment) =>

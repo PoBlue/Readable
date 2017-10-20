@@ -4,6 +4,8 @@ import CommentList from './commentList';
 import { mapPostDispatchToProps } from '../dispatches/dispatches'
 import { getAllComments } from '../actions/comment'
 import Post from './post'
+import PostForm from './postForm'
+import {sortObjectArrayByKey}  from '../util/Util'
 
 class PostList extends Component {
     componentWillMount() {
@@ -13,15 +15,17 @@ class PostList extends Component {
 
     render() {
         let { posts, category, createPost } = this.props;
-        const allPosts = posts[category];
-        if(!allPosts) return ('');
+        let allPosts = posts[category];
+        if(!allPosts) allPosts=[];
+        sortObjectArrayByKey(allPosts, this.props.sortby)
 
         return (
             <div id="post-list">
                 <h2>Post</h2>
-                {posts[category].map((post) =>
+                {allPosts.map((post) =>
                     <Post key={post.id} post={post}/>
                 )}
+                <PostForm category={category}></PostForm>
             </div>
         );
     }

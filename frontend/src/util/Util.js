@@ -21,3 +21,9 @@ export function getTimeFromDate(timestamp) {
 
   return date.toLocaleString();
 }
+
+export function sortObjectArrayByKey(objs, key) {
+  return objs.sort(function(a, b) {
+    return a[key] < b[key]
+  })
+}

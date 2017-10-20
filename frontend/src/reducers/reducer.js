@@ -59,8 +59,10 @@ function posts(state = {}, action) {
             }, {});
         case CREATE_POST: {
             const { post } = action;
-            state[post.category].push(post);
-            return state;
+            return {
+                ...state,
+                [post.category]: state[post.category].concat([post])
+            };
         }
         case UPDATE_POST:
         {
@@ -126,14 +128,13 @@ function comments(state = {}, action) {
         case CREATE_COMMENT:
         {
             const { comment } = action;
-            if(!state[comment.parentId]) {
-                state[comment.parentId] = [comment]
-            } else {
-                state[comment.parentId].push(comment);
-            }
-            return state;
+            return {
+                ...state,
+                [comment.parentId]: state[comment.parentId].concat(comment)
+            };
         }
-        case UPDATE_COMMENT, VOTE_COMMENT:{
+        case VOTE_COMMENT:
+        case UPDATE_COMMENT:{
             const { comment } = action;
             const newComments = state[comment.parentId].map((oldComment) => {
                 if (oldComment.id === comment.id) {
