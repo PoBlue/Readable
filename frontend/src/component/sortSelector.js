@@ -13,6 +13,7 @@ class SortSelector extends Component {
     render() {
         return (
             <div className="sort-selector">
+                <span>Sort By: </span>  
                 <select name="sort" id="sort"
                     value={this.props.sortby}
                     onChange={(event) => this.selectHandler(event)}>

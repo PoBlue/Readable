@@ -26,17 +26,24 @@ class PostDetail extends Component {
 
         return (
             <div id="post-detail">
-                <button onClick={_ => this.props.history.goBack()}>Go Back</button>
                 <h1>{title}</h1>
-                <h2>{category}</h2>
-                <h3>{author}</h3>
-                <h3>{voteScore}</h3>
-                <VoteButton setVote={this.setVote.bind(this)}/>
-                <textarea name="post-content" id="post-content"
+                <button onClick={_ => this.props.history.goBack()}>Go Back</button>
+                <div id="detail">
+                    <p>{body}</p>
+                    <p className="font-small">
+                        In Category: <span className="description">{category}</span><br />
+                        Write By: <span className="description">{author}</span>
+                    </p>
+                </div>
+                <div className="vote-score">
+                    <p>Post Vote Score: <span className="score">{voteScore}</span></p>
+                    <VoteButton setVote={this.setVote.bind(this)} />
+                </div>
+                {/*<textarea name="post-content" id="post-content"
                     cols="30" rows="10"
                     defaultValue={body}
                     disabled
-                />
+                />*/}
                 <h2>Comment</h2>
                 <CommentList post={post}/>
             </div>

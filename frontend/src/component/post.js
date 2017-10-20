@@ -15,19 +15,20 @@ class Post extends Component {
                 <h3>{title}</h3>
                 <ul>
                     <li>
-                        <b>author:</b>{author}<br />
+                        <b>author:</b> {author} <br/>
                     </li>
                     <li>
-                        <b>voteScore: </b>{voteScore}<br />
+                        <b>voteScore: </b> {voteScore} <br/>
                     </li>
                     <li>
-                        <b>timestamp: </b>{timestamp}<br />
+                        <b>timestamp: </b> {timestamp} <br/>
                     </li>
                 </ul>
-                <button onClick={() => this.props.deletePost(post)}>delete</button>
-                <br/>
-                <PostForm category={post.category} post={post} editorMode={true}></PostForm>
                 <Link to={`/post/${id}/detail`}>detail</Link>
+                <div id="post-button">
+                    <PostForm category={post.category} post={post} editorMode={true}></PostForm>
+                    <button onClick={() => this.props.deletePost(post)}>delete</button>
+                </div>
             </div>
         )
     }

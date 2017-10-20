@@ -15,9 +15,16 @@ class Comment extends Component {
                 timestamp, voteScore, author } = comment
         return (
             <div id="comment">
-                <p>{body}</p>
-                <div className="vote-score">{voteScore}</div>
-                <VoteButton setVote={this.setVote.bind(this)}/>
+                <div>
+                    <p>{body}</p>
+                    <p className="font-small">
+                        Write By: <span className="description">{author}</span>
+                    </p>
+                </div>
+                <div>
+                    <p>Post Vote Score: <span className="score">{voteScore}</span></p>
+                    <VoteButton setVote={this.setVote.bind(this)} />
+                </div>
                 <button onClick={() => this.props.deleteComment(comment)}>delete</button>
                 <CommentForm postId={comment.parentId} comment={comment} editorMode={true}/>
             </div>

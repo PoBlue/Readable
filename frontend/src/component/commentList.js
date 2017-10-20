@@ -34,10 +34,10 @@ class CommentList extends Component {
         return (
             <div id="comment-list">
                 <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)}/>
+                <CommentForm postId={post.id}/>
                 {allComments.map((comment) => (
                     <Comment key={comment.id} comment={comment}/>
                 ))}
-                <CommentForm postId={post.id}/>
             </div>
         );
     }

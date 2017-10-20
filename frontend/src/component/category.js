@@ -28,8 +28,13 @@ class Category extends Component {
         return (
             <div id="category">
                 <h1>{categoryName}</h1>
-                <button onClick={_ => this.props.history.goBack()}>Go Back</button>
-                <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)}/>
+                <div className="center-wrapper">
+                    <button className="back-button" onClick={_ => this.props.history.goBack()}>Go Back</button>
+                </div>
+                <h2>Post</h2>
+                <div className="center-wrapper">
+                    <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)} />
+                </div>
                 <PostList category={categoryName} sortby={this.state.sortby}/>
             </div>
         )

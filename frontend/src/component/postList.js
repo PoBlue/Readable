@@ -21,11 +21,12 @@ class PostList extends Component {
 
         return (
             <div id="post-list">
-                <h2>Post</h2>
+                <div className="center-wrapper">
+                    <PostForm category={category}></PostForm>
+                </div>
                 {allPosts.map((post) =>
                     <Post key={post.id} post={post}/>
                 )}
-                <PostForm category={category}></PostForm>
             </div>
         );
     }
