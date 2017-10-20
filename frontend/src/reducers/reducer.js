@@ -59,9 +59,11 @@ function posts(state = {}, action) {
             }, {});
         case CREATE_POST: {
             const { post } = action;
+            let allPost = state[post.category];
+            if(!allPost) allPost=[];
             return {
                 ...state,
-                [post.category]: state[post.category].concat([post])
+                [post.category]: allPost.concat([post])
             };
         }
         case UPDATE_POST:
@@ -128,9 +130,11 @@ function comments(state = {}, action) {
         case CREATE_COMMENT:
         {
             const { comment } = action;
+            let allComments = state[comment.parentId];
+            if(!allComments) allComments=[];
             return {
                 ...state,
-                [comment.parentId]: state[comment.parentId].concat(comment)
+                [comment.parentId]: allComments.concat(comment)
             };
         }
         case VOTE_COMMENT:

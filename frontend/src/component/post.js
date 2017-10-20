@@ -21,7 +21,7 @@ class Post extends Component {
                         <b>voteScore: </b> {voteScore} <br/>
                     </li>
                     <li>
-                        <b>timestamp: </b> {timestamp} <br/>
+                        <b>timestamp: </b> {getTimeFromDate(timestamp)} <br/>
                     </li>
                 </ul>
                 <Link to={`/post/${id}/detail`}>detail</Link>
