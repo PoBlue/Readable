@@ -25,7 +25,8 @@ class PostDetail extends Component {
 
     render() {
         let { post, comments } = this.props;
-        if(!post) return 'loding';
+        if (!post) return 'loding';
+        if(post.error) return '404 not found';
         const { id, author, body,
                 category, timestamp, title, 
                 voteScore } = post
