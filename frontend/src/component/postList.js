@@ -8,11 +8,6 @@ import PostForm from './postForm'
 import {sortObjectArrayByKey}  from '../util/Util'
 
 class PostList extends Component {
-    componentWillMount() {
-        let { posts, category } = this.props;
-        this.props.getPostsInCategory(category)
-    }
-
     render() {
         let { posts, category, createPost } = this.props;
         let allPosts = [];
@@ -20,6 +15,7 @@ class PostList extends Component {
             allPosts = posts[category];
         } else {
             allPosts = Object.keys(posts).reduce((lastPosts, key) => {
+                if (key === "detailPost") return lastPosts;
                 return lastPosts.concat(posts[key])
             }, [])
         }

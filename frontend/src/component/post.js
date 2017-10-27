@@ -8,8 +8,9 @@ import PostForm from './postForm'
 
 class Post extends Component {
     render() {
-        const { post } = this.props
+        const { post, comments } = this.props
         const { title, author, voteScore, timestamp, id } = post
+        let postComment = comments[id]? comments[id] : [];
         return (
             <div id="post">
                 <h3>{title}</h3>
@@ -23,6 +24,9 @@ class Post extends Component {
                     <li>
                         <b>timestamp: </b> {getTimeFromDate(timestamp)} <br/>
                     </li>
+                    <li>
+                        <b>comments count: </b> {postComment.length} <br/>
+                    </li>
                 </ul>
                 <Link to={`/post/${id}/detail`}>detail</Link>
                 <div id="post-button">
@@ -34,4 +38,10 @@ class Post extends Component {
     }
 }
 
-export default connect(undefined, mapPostDispatchToProps)(Post);
+function mapStateToProps({ comments }) {
+    return {
+        comments
+    }
+}
+
+export default connect(mapStateToProps, mapPostDispatchToProps)(Post);

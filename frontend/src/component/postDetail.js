@@ -18,11 +18,12 @@ class PostDetail extends Component {
     }
 
     render() {
-        let post = this.props.post;
+        let { post, comments } = this.props;
         if(!post) return 'loding';
         const { id, author, body,
                 category, timestamp, title, 
                 voteScore } = post
+        let postComment = comments[id]? comments[id] : [];
 
         return (
             <div id="post-detail">
@@ -45,15 +46,19 @@ class PostDetail extends Component {
                     disabled
                 />*/}
                 <h2>Comment</h2>
+                <p className="font-small">
+                    Total Comment Count: <span className="description">{postComment.length}</span><br />
+                </p>
                 <CommentList post={post}/>
             </div>
         )
     }
 }
 
-function mapStateToPorps({ posts }) {
+function mapStateToPorps({ posts, comments }) {
     return {
-        post: posts.detailPost
+        post: posts.detailPost,
+        comments
     }
 }
 

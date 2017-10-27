@@ -99,17 +99,28 @@ function posts(state = {}, action) {
         case GET_POST_DETAIL:
         {   
             return {
+                ...state,
                 detailPost: { ...action.post }
             }
         }
         case VOTE_POST: {
             return {
+                ...state,
                 detailPost: { ...action.post }
             }
         }
         default:
             return state
     }
+}
+
+/*
+    {
+        detailPost
+    }
+*/ 
+function detailPost(state={}, action) {
+
 }
 
 /*
