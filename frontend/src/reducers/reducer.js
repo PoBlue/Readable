@@ -42,10 +42,12 @@ function posts(state = {}, action) {
                 if(!(post.category in posts)) {
                     posts[post.category] = [post];
                 } else {
-                    posts[post.category].push(post);
+                    if (!contains(posts[post.category], post)) {
+                        posts[post.category].push(post);
+                    }
                 }
                 return posts
-            }, {});
+            }, {...state});
             return newState
         }
         case GET_ALL_POST:
@@ -53,10 +55,12 @@ function posts(state = {}, action) {
                 if(!(post.category in posts)) {
                     posts[post.category] = [post];
                 } else {
-                    posts[post.category].push(post);
+                    if (!contains(posts[post.category], post)) {
+                        posts[post.category].push(post);
+                    }
                 }
                 return posts
-            }, {});
+            }, {...state});
         case CREATE_POST: {
             const { post } = action;
             let allPost = state[post.category];

@@ -15,14 +15,21 @@ class PostList extends Component {
 
     render() {
         let { posts, category, createPost } = this.props;
-        let allPosts = posts[category];
+        let allPosts = [];
+        if (category) {
+            allPosts = posts[category];
+        } else {
+            allPosts = Object.keys(posts).reduce((lastPosts, key) => {
+                return lastPosts.concat(posts[key])
+            }, [])
+        }
         if(!allPosts) allPosts=[];
         sortObjectArrayByKey(allPosts, this.props.sortby)
 
         return (
             <div id="post-list">
                 <div className="center-wrapper">
-                    <PostForm category={category}></PostForm>
+                    <PostForm category={category} buttonName={"create a post"}></PostForm>
                 </div>
                 {allPosts.map((post) =>
                     <Post key={post.id} post={post}/>

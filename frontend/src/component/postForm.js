@@ -39,9 +39,9 @@ class PostForm extends Component {
     }
 
     render() {
-        let post = this.props.post
+        let { post, buttonName } = this.props
         if (!post) post = {};
-        const buttonName = this.props.editorMode? 'edit' : 'create'
+        if (!buttonName) buttonName = this.props.editorMode? 'edit' : 'create'
         const {body, author, title} = post
         return (
             <div id="post-form">

@@ -5,10 +5,23 @@ import { getPostsInCategory, getAllCategoryPosts } from '../actions/post'
 import { mapCategoryDispatchToProps } from '../dispatches/dispatches'
 import { Link } from 'react-router-dom';
 import PostList from './postList'
+import {
+    OPTION_TIME,
+    OPTION_VOTE
+ } from './constant'
+import SortSelector from './sortSelector'
 
 class CategoryList extends Component {
     componentDidMount() {
         this.props.getAllCategory();
+    }
+
+    state = {
+        sortby: OPTION_VOTE
+    }
+
+    updateSortby(sortby) {
+        this.setState(sortby);
     }
 
     render() {
@@ -31,6 +44,11 @@ class CategoryList extends Component {
                         )}
                     </ul>
                 </div>
+                <h2>All Post</h2>
+                <div className="center-wrapper">
+                    <SortSelector sortby={this.state.sortby} updateSortby={this.updateSortby.bind(this)} />
+                </div>
+                <PostList sortby={this.state.sortby}/>
             </div>
         )
     }

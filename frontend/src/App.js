@@ -4,11 +4,16 @@ import * as Util from './util/Util'
 import CategoryList from './component/categoryList'
 import Category from './component/category'
 import PostDetail from './component/postDetail'
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { mapPostDispatchToProps } from './dispatches/dispatches'
 // import './css/bootstrap.css';
 import './css/style.css';
 
 class App extends Component {
+    componentWillMount() {
+        this.props.getAllPosts();
+    }
 
   render() {
     return (
@@ -27,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(connect(undefined, mapPostDispatchToProps)(App));
