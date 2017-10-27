@@ -25,7 +25,7 @@ class PostList extends Component {
         return (
             <div id="post-list">
                 <div className="center-wrapper">
-                    <PostForm category={category} buttonName={"create a post"}></PostForm>
+                    <PostForm category={category} buttonName={"create post"}></PostForm>
                 </div>
                 {allPosts.map((post) =>
                     <Post key={post.id} post={post}/>

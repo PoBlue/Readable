@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { getPostDetailAction } from '../actions/post'
 import { mapPostDispatchToProps } from '../dispatches/dispatches'
 import VoteButton from './voteButton'
+import PostForm from './postForm'
 
 class PostDetail extends Component {
     componentDidMount() {
@@ -15,6 +16,11 @@ class PostDetail extends Component {
 
     setVote(isUp) {
         this.props.votePost(this.props.post, isUp)
+    }
+
+    deletePost() {
+        this.props.deletePost(this.props.post)
+        this.props.history.goBack()
     }
 
     render() {
@@ -35,6 +41,10 @@ class PostDetail extends Component {
                         In Category: <span className="description">{category}</span><br />
                         Write By: <span className="description">{author}</span>
                     </p>
+                    <div id="post-button">
+                        <PostForm category={post.category} post={post} editorMode={true}></PostForm>
+                        <button onClick={() => this.deletePost() }>delete post</button>
+                    </div>
                 </div>
                 <div className="vote-score">
                     <p>Post Vote Score: <span className="score">{voteScore}</span></p>
