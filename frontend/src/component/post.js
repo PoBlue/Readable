@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
 import {mapPostDispatchToProps} from '../dispatches/dispatches'
 import PostForm from './postForm'
+import VoteButton from './voteButton'
 
 class Post extends Component {
     render() {
@@ -19,13 +20,14 @@ class Post extends Component {
                         <b>author:</b> {author} <br/>
                     </li>
                     <li>
-                        <b>voteScore: </b> {voteScore} <br/>
-                    </li>
-                    <li>
                         <b>timestamp: </b> {getTimeFromDate(timestamp)} <br/>
                     </li>
                     <li>
                         <b>comments count: </b> {postComment.length} <br/>
+                    </li>
+                    <li>
+                        <p>Post Vote Score: <span className="score">{voteScore}</span></p>
+                        <VoteButton setVote={(isUp) => this.props.votePost(this.props.post, isUp)} />
                     </li>
                 </ul>
                 <Link to={`/post/${id}/detail`}>detail</Link>

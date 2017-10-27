@@ -70,6 +70,7 @@ function posts(state = {}, action) {
                 [post.category]: allPost.concat([post])
             };
         }
+        case VOTE_POST: 
         case UPDATE_POST:
         {
             const { post } = action;
@@ -98,12 +99,6 @@ function posts(state = {}, action) {
         }
         case GET_POST_DETAIL:
         {   
-            return {
-                ...state,
-                detailPost: { ...action.post }
-            }
-        }
-        case VOTE_POST: {
             return {
                 ...state,
                 detailPost: { ...action.post }
