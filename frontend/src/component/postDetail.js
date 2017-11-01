@@ -7,6 +7,7 @@ import { getPostDetailAction } from '../actions/post'
 import { mapPostDispatchToProps } from '../dispatches/dispatches'
 import VoteButton from './voteButton'
 import PostForm from './postForm'
+import NotFound404 from './404page'
 
 class PostDetail extends Component {
     componentDidMount() {
@@ -27,6 +28,8 @@ class PostDetail extends Component {
         let { post, comments } = this.props;
         if (!post) return 'loding';
         if(post.error) return '404 not found';
+        if(!post.id) return (<NotFound404 message={"Do not have this post :)"}/>);
+
         const { id, author, body,
                 category, timestamp, title, 
                 voteScore } = post

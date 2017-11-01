@@ -9,6 +9,7 @@ import { mapPostDispatchToProps } from '../dispatches/dispatches'
 import { connect } from 'react-redux'
 import PostList from './postList'
 import SortSelector from './sortSelector'
+import NotFound404 from './404page'
 
 class Category extends Component {
     componentDidMount() {
@@ -23,8 +24,19 @@ class Category extends Component {
         this.setState(sortby);
     }
 
+    contains(name) {
+        for (var i = 0; i < this.props.allCategories.length; i++) {
+            if (this.props.allCategories[i] === name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     render() {
         const categoryName = this.props.match.params.category
+        if(!this.contains(categoryName)) return (<NotFound404 message={"no this category:)"}/>);
+
         return (
             <div id="category">
                 <h1>{categoryName}</h1>
@@ -41,5 +53,11 @@ class Category extends Component {
     }
 }
 
+function mapStateToProps({ categories }) {
+    return {
+        allCategories: categories,
+    }
+}
 
-export default withRouter(connect(undefined, mapPostDispatchToProps)(Category))
+
+export default withRouter(connect(mapStateToProps, mapPostDispatchToProps)(Category))

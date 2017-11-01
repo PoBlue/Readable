@@ -4,12 +4,14 @@ import * as Util from './util/Util'
 import CategoryList from './component/categoryList'
 import Category from './component/category'
 import PostDetail from './component/postDetail'
-import { Route, withRouter } from 'react-router-dom';
+import  NotFound404 from './component/404page'
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   mapPostDispatchToProps,
   mapCommentDispatchToProps,
-  combineDispatch
+  mapCategoryDispatchToProps,
+  combineDispatch,
 } from './dispatches/dispatches'
 // import './css/bootstrap.css';
 import './css/style.css';
@@ -17,6 +19,7 @@ import './css/style.css';
 class App extends Component {
   componentWillMount() {
     this.props.getAllPosts();
+    this.props.getAllCategory();
   }
 
   getAllComment() {
@@ -34,15 +37,20 @@ class App extends Component {
     this.getAllComment();
     return (
       <div className="App">
-        <Route exact path="/" render={() =>
-          <CategoryList/>
-        }/>
-        <Route exact path="/:category" render={() =>
-          <Category/>
-        }/>
-        <Route exact path="/post/:postId/detail" render={() => 
-          <PostDetail/>
-        }/>
+        <Switch>
+          <Route exact path="/" render={() =>
+            <CategoryList/>
+          }/>
+          <Route exact path="/:category" render={() =>
+            <Category/>
+          }/>
+          <Route exact path="/post/:postId/detail" render={() => 
+            <PostDetail/>
+          }/>
+          <Route path="*" render={() =>
+            <NotFound404 message={"404 Not Found"}/>
+          }/>
+        </Switch>
       </div>
     );
   }
@@ -55,4 +63,6 @@ function mapStateToProps({posts}) {
 }
 
 export default withRouter(connect(mapStateToProps,
-  combineDispatch(mapPostDispatchToProps, mapCommentDispatchToProps))(App));
+  combineDispatch(combineDispatch(mapPostDispatchToProps,
+    mapCommentDispatchToProps),
+    mapCategoryDispatchToProps))(App));
