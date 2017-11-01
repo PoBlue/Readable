@@ -15,6 +15,7 @@ import {
     VOTE_POST
  } from '../actions/actionType'
  import { contains } from '../util/Util'
+ import {CATEGORY_REACT, CATEGORY_UDACITY, CATEGORY_REDUX} from '../component/constant'
 
 function categories(state = [], action) {
     switch (action.type) {
